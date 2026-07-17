@@ -1,0 +1,89 @@
+# Cloud Build for HALO Africa public website.
+#
+# Branch strategy:
+#   main    -> production service
+#   develop -> staging service
+
+substitutions:
+  _REGION: us-central1
+  _PROJECT_ID: main-presence-500410-f8
+  _REPO: halo-platform
+  _DEPLOY_ENV: ""
+  _SERVICE_NAME: ""
+  _SHORT_SHA: latest
+  _BRANCH_NAME: manual
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  - name: bash
+    id: set-env
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        branch="${_BRANCH_NAME}"
+        env="${_DEPLOY_ENV}"
+        service_override="${_SERVICE_NAME}"
+
+        if [ -n "$$service_override" ]; then
+          echo "$$service_override" > /workspace/SERVICE_NAME
+        elif [ "$$branch" = "main" ] || [ "$$env" = "production" ]; then
+          echo "halo-africa-site" > /workspace/SERVICE_NAME
+        else
+          echo "halo-africa-site-staging" > /workspace/SERVICE_NAME
+        fi
+
+        if [ "$$branch" = "main" ] || [ "$$env" = "production" ]; then
+          echo "production" > /workspace/APP_ENV
+        else
+          echo "staging" > /workspace/APP_ENV
+        fi
+
+        echo "Branch  : $$branch"
+        echo "Env     : $$(cat /workspace/APP_ENV)"
+        echo "Service : $$(cat /workspace/SERVICE_NAME)"
+
+  - name: gcr.io/cloud-builders/docker
+    id: build-site
+    waitFor: [set-env]
+    args:
+      - build
+      - --tag
+      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-site:${_SHORT_SHA}
+      - --tag
+      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-site:${_BRANCH_NAME}
+      - --file
+      - Dockerfile
+      - .
+
+  - name: gcr.io/cloud-builders/docker
+    id: push-site
+    waitFor: [build-site]
+    args: [push, --all-tags, "${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-site"]
+
+  - name: gcr.io/cloud-builders/gcloud
+    id: deploy-site
+    waitFor: [push-site]
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        svc=$$(cat /workspace/SERVICE_NAME)
+        env=$$(cat /workspace/APP_ENV)
+        gcloud run deploy "$$svc" \
+          --image="${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-site:${_SHORT_SHA}" \
+          --region="${_REGION}" \
+          --platform=managed \
+          --allow-unauthenticated \
+          --port=8080 \
+          --memory=512Mi \
+          --cpu=1 \
+          --min-instances=0 \
+          --max-instances=5 \
+          --set-env-vars="APP_ENV=$$env"
+
+images:
+  - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-site:${_SHORT_SHA}
+  - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-site:${_BRANCH_NAME}

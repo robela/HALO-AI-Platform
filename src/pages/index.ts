@@ -1,0 +1,7 @@
+export { LandingPage } from './LandingPage'
+export { DashboardPage } from './DashboardPage'
+export { ChatPage } from './ChatPage'
+export { VoicePage } from './VoicePage'
+export { KnowledgePage } from './KnowledgePage'
+export { IVRPage } from './IVRPage'
+export { SettingsPage } from './SettingsPage'

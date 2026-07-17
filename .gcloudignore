@@ -1,0 +1,27 @@
+# Files NOT uploaded to Cloud Build
+.gcloudignore
+.git/
+.gitignore
+
+# Dependencies (rebuilt in Docker)
+node_modules/
+
+# Build output
+dist/
+
+# Local env files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+.venv/
