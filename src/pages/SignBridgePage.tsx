@@ -24,7 +24,7 @@ const features = [
   { icon: HandMetal,    title: 'Text-to-Sign Language',         description: 'Converts text to sign-language animations or video sequences — ASL, Ethiopian Sign Language, and more.', color: 'from-emerald-500 to-green-600' },
   { icon: Smartphone,   title: 'Mobile-First PWA',              description: 'Responsive Progressive Web App — works on Android, iOS, and any modern browser. Lightweight and fast.', color: 'from-rose-500 to-pink-600' },
   { icon: Globe,        title: 'Multilingual Support',          description: 'English, Amharic, and additional African languages. Language detection is automatic.', color: 'from-amber-500 to-orange-600' },
-  { icon: Accessibility,'title': 'Accessibility-First UX',      description: 'High-contrast interface, large-text options, simple navigation, and touch-friendly controls.', color: 'from-fuchsia-500 to-pink-600' },
+  { icon: Accessibility, title: 'Accessibility-First UX',      description: 'High-contrast interface, large-text options, simple navigation, and touch-friendly controls.', color: 'from-fuchsia-500 to-pink-600' },
 ]
 
 const useCases = [
