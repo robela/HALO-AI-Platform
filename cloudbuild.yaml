@@ -70,8 +70,8 @@ steps:
     args:
       - -c
       - |
-        svc=$$(cat /workspace/SERVICE_NAME)
-        env=$$(cat /workspace/APP_ENV)
+        svc=$$(cat /workspace/SERVICE_NAME | xargs)
+        env=$$(cat /workspace/APP_ENV | xargs)
         gcloud run deploy "$$svc" \
           --image="${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-site:${_SHORT_SHA}" \
           --region="${_REGION}" \
