@@ -1,5 +1,5 @@
 # Stage 1: Build the Vite frontend with a slimmer Debian base.
-FROM node:20-bookworm-slim AS builder
+FROM node:22-bookworm-slim AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json ./
