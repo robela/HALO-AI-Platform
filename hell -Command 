@@ -1,0 +1,5 @@
+[33m3e986fd[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m, [m[1;31morigin/develop[m[33m)[m fixe docker
+[33m603c856[m fix: add error handling to lifespan - allow app to start even if db or whisper fails
+[33m3b75f70[m fix: simplify Dockerfile to ensure uvicorn is accessible - single stage build installs deps before non-root user
+[33m7503c7f[m fix: use /tmp for SQLite database and increase health check timeout
+[33m32af6c8[m fix

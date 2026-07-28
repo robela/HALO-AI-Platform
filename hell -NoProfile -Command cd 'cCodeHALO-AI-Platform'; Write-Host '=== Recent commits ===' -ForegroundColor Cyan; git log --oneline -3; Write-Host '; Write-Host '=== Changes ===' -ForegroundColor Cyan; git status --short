@@ -1,0 +1,3 @@
+[33m50234da[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m)[m fix: use hardcoded backend URL in Cloud Build to fix frontend API connectivity
+[33m3e986fd[m[33m ([m[1;31morigin/develop[m[33m)[m fixe docker
+[33m603c856[m fix: add error handling to lifespan - allow app to start even if db or whisper fails
