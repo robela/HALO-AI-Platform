@@ -1,4 +1,5 @@
 # Run with: uvicorn main:app --reload --port 8000
+# Deployment version: with CORS fix for frontend integration
 import uvicorn
 from app import create_app
 from app.config import Settings
