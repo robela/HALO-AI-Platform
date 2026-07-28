@@ -58,10 +58,22 @@ def create_app() -> FastAPI:
     app.include_router(speech_router)
     app.include_router(sign_router)
 
+    # Build CORS allowed origins
+    allowed_origins = [
+        Settings.FRONTEND_URL,
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "http://localhost:5173",
+        "https://halo-africa-site-397980615504.us-central1.run.app",
+        "https://halo-africa-site-staging-main-presence-500410-f8.us-central1.run.app",
+        "https://api.haloafrica.ai",
+        "https://staging-api.haloafrica.ai",
+    ]
+
     # CORSMiddleware last (innermost wrapper = applied first to requests)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=[Settings.FRONTEND_URL, "http://localhost:3000", "http://localhost:3001", "http://localhost:5173"],
+        allow_origins=allowed_origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
