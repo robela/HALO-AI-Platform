@@ -1,0 +1,3 @@
+[33me5c6561[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop[m[33m)[m fix: remove faster-whisper and numpy dependencies
+[33m7baa19a[m fix: improve backend Dockerfile with better error handling and runtime dependencies
+[33m199bf37[m[33m ([m[1;31morigin/develop[m[33m)[m cloud-fix
