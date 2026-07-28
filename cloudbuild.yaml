@@ -14,7 +14,7 @@ substitutions:
   _SHORT_SHA: latest
   _BRANCH_NAME: manual
   _VITE_GOOGLE_CLIENT_ID: "397980615504-bk84p5ecc8ml3k5c6raccduk1okqvcdq.apps.googleusercontent.com"
-  _VITE_API_BASE_URL: "http://localhost:8000"
+  _BACKEND_API_BASE_URL: "" # Will be set to actual backend Cloud Run URL
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -30,6 +30,7 @@ steps:
         env="${_DEPLOY_ENV}"
         frontend_override="${_SERVICE_NAME_FRONTEND}"
         backend_override="${_SERVICE_NAME_BACKEND}"
+        backend_url_override="${_BACKEND_API_BASE_URL}"
 
         if [ -n "$$frontend_override" ]; then
           echo "$$frontend_override" > /workspace/FRONTEND_SERVICE_NAME
@@ -49,17 +50,38 @@ steps:
 
         if [ "$$branch" = "main" ] || [ "$$env" = "production" ]; then
           echo "production" > /workspace/APP_ENV
-          echo "https://api.haloafrica.ai" > /workspace/VITE_API_BASE_URL
         else
           echo "staging" > /workspace/APP_ENV
-          echo "https://staging-api.haloafrica.ai" > /workspace/VITE_API_BASE_URL
         fi
 
+        # Set backend API URL
+        if [ -n "$$backend_url_override" ]; then
+          # Use provided backend URL
+          echo "$$backend_url_override" > /workspace/VITE_API_BASE_URL
+        else
+          # Query deployed backend service for its URL
+          backend_svc=$$(cat /workspace/BACKEND_SERVICE_NAME | xargs)
+          backend_url=$$(gcloud run services describe "$$backend_svc" --region=${_REGION} --format='value(status.url)' 2>/dev/null || echo "")
+          
+          if [ -z "$$backend_url" ]; then
+            # Fallback: use localhost for local testing
+            echo "⚠️  Backend service not found, using localhost"
+            echo "http://localhost:8000" > /workspace/VITE_API_BASE_URL
+          else
+            echo "✅ Using backend URL: $$backend_url"
+            echo "$$backend_url" > /workspace/VITE_API_BASE_URL
+          fi
+        fi
+
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        echo "📋 Deployment Configuration:"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo "Branch           : $$branch"
-        echo "Env              : $$(cat /workspace/APP_ENV)"
+        echo "Environment      : $$(cat /workspace/APP_ENV)"
         echo "Frontend Service : $$(cat /workspace/FRONTEND_SERVICE_NAME)"
         echo "Backend Service  : $$(cat /workspace/BACKEND_SERVICE_NAME)"
         echo "API Base URL     : $$(cat /workspace/VITE_API_BASE_URL)"
+        echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
   - name: gcr.io/cloud-builders/docker
     id: build-frontend
