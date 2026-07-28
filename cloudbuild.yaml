@@ -64,19 +64,19 @@ steps:
   - name: gcr.io/cloud-builders/docker
     id: build-frontend
     waitFor: [set-env]
+    entrypoint: bash
     args:
-      - build
-      - --tag
-      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-frontend:${_SHORT_SHA}
-      - --tag
-      - ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-frontend:${_BRANCH_NAME}
-      - --build-arg
-      - VITE_GOOGLE_CLIENT_ID=${_VITE_GOOGLE_CLIENT_ID}
-      - --build-arg
-      - VITE_API_BASE_URL=$$(cat /workspace/VITE_API_BASE_URL)
-      - --file
-      - Dockerfile
-      - .
+      - -c
+      - |
+        api_url=$$(cat /workspace/VITE_API_BASE_URL)
+        echo "🔨 Building frontend with API URL: $$api_url"
+        docker build \
+          --tag ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-frontend:${_SHORT_SHA} \
+          --tag ${_REGION}-docker.pkg.dev/${_PROJECT_ID}/${_REPO}/halo-frontend:${_BRANCH_NAME} \
+          --build-arg VITE_GOOGLE_CLIENT_ID=${_VITE_GOOGLE_CLIENT_ID} \
+          --build-arg VITE_API_BASE_URL=$$api_url \
+          --file Dockerfile \
+          .
 
   - name: gcr.io/cloud-builders/docker
     id: push-frontend
