@@ -103,6 +103,19 @@ async def google_login(
     return TokenResponse(access_token=token, user=UserOut.model_validate(user))
 
 
+@router.options("/google", tags=["Auth"])
+async def google_login_options():
+    from fastapi.responses import JSONResponse
+    return JSONResponse(
+        content={},
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization"
+        }
+    )
+
+
 @router.get("/me", response_model=UserOut)
 async def get_me(
     current_user: UserDB = Depends(authenticate_user),
