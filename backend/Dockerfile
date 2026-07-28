@@ -5,10 +5,9 @@ FROM python:3.11-slim as builder
 
 WORKDIR /tmp
 
-# Install build dependencies and system libraries
+# Install build dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    libopenblas-dev \
     libffi-dev \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
@@ -27,8 +26,6 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     ca-certificates \
-    libopenblas0 \
-    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy Python dependencies from builder
