@@ -1,5 +1,5 @@
 # Run with: uvicorn main:app --reload --port 8000
-# Deployment version: with CORS fix for frontend integration
+# Deployment version: with CORS allow_credentials=False
 import uvicorn
 from app import create_app
 from app.config import Settings
