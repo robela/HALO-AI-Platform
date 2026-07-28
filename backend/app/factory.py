@@ -2,7 +2,6 @@ from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from .config import Settings
@@ -68,19 +67,8 @@ def create_app() -> FastAPI:
     app.include_router(speech_router)
     app.include_router(sign_router)
 
-    # Build CORS allowed origins
-    allowed_origins = [
-        "*",  # Allow all origins for now to debug CORS issues
-    ]
-
-    # CORSMiddleware last (innermost wrapper = applied first to requests)
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=allowed_origins,
-        allow_credentials=False,  # Must be False when allow_origins=["*"]
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+    # CORS handling is done via explicit response headers in endpoints
+    # (see /health and /auth/google endpoints below)
 
     @app.get("/health", tags=["Health"])
     async def health():
