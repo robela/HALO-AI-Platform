@@ -69,14 +69,7 @@ def create_app() -> FastAPI:
 
     # Build CORS allowed origins
     allowed_origins = [
-        Settings.FRONTEND_URL,
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://localhost:5173",
-        "https://halo-africa-site-397980615504.us-central1.run.app",
-        "https://halo-africa-site-staging-main-presence-500410-f8.us-central1.run.app",
-        "https://api.haloafrica.ai",
-        "https://staging-api.haloafrica.ai",
+        "*",  # Allow all origins for now to debug CORS issues
     ]
 
     # CORSMiddleware last (innermost wrapper = applied first to requests)
