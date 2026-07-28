@@ -19,11 +19,20 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     from .speech import models as _speech_models  # noqa: F401
     from .sign import models as _sign_models  # noqa: F401
 
-    Base.metadata.create_all(bind=get_sqlalchemy_engine())
+    try:
+        Base.metadata.create_all(bind=get_sqlalchemy_engine())
+    except Exception as e:
+        import sys
+        print(f"WARNING: Failed to create database tables: {e}", file=sys.stderr)
 
-    # Load Whisper model once and store on app.state
-    from .speech.service import load_whisper_model
-    app.state.whisper_model = load_whisper_model()
+    # Load Whisper model once and store on app.state (optional, graceful fallback)
+    try:
+        from .speech.service import load_whisper_model
+        app.state.whisper_model = load_whisper_model()
+    except Exception as e:
+        import sys
+        print(f"WARNING: Whisper model not available: {e}", file=sys.stderr)
+        app.state.whisper_model = None
 
     yield
 
