@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from .config import Settings
@@ -67,29 +68,20 @@ def create_app() -> FastAPI:
     app.include_router(speech_router)
     app.include_router(sign_router)
 
-    # CORS handling is done via explicit response headers in endpoints
-    # (see /health and /auth/google endpoints below)
+    # Add CORS middleware - MUST be added BEFORE the app defines endpoints
+    # This allows browsers to make cross-origin requests
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Allow all origins in development
+        allow_credentials=False,  # False when allow_origins=["*"]
+        allow_methods=["*"],
+        allow_headers=["*"],
+        expose_headers=["*"],  # Expose all headers to browser
+        max_age=600,  # Cache preflight for 10 minutes
+    )
 
     @app.get("/health", tags=["Health"])
     async def health():
-        return JSONResponse(
-            content={"status": "ok", "service": "HALO AI Platform API"},
-            headers={
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization"
-            }
-        )
-
-    @app.options("/health", tags=["Health"])
-    async def health_options():
-        return JSONResponse(
-            content={},
-            headers={
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type, Authorization"
-            }
-        )
+        return {"status": "ok", "service": "HALO AI Platform API"}
 
     return app
