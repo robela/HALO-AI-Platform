@@ -59,18 +59,18 @@ steps:
           # Use provided backend URL
           echo "$$backend_url_override" > /workspace/VITE_API_BASE_URL
         else
-          # Query deployed backend service for its URL
-          backend_svc=$$(cat /workspace/BACKEND_SERVICE_NAME | xargs)
-          backend_url=$$(gcloud run services describe "$$backend_svc" --region=${_REGION} --format='value(status.url)' 2>/dev/null || echo "")
+          app_env=$$(cat /workspace/APP_ENV)
           
-          if [ -z "$$backend_url" ]; then
-            # Fallback: use localhost for local testing
-            echo "⚠️  Backend service not found, using localhost"
-            echo "http://localhost:8000" > /workspace/VITE_API_BASE_URL
+          if [ "$$app_env" = "production" ]; then
+            # Production backend
+            backend_url="https://halo-backend-main-presence-500410-f8.us-central1.run.app"
           else
-            echo "✅ Using backend URL: $$backend_url"
-            echo "$$backend_url" > /workspace/VITE_API_BASE_URL
+            # Staging backend
+            backend_url="https://halo-backend-main-presence-500410-f8.us-central1.run.app"
           fi
+          
+          echo "✅ Using backend URL: $$backend_url"
+          echo "$$backend_url" > /workspace/VITE_API_BASE_URL
         fi
 
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
