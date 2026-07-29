@@ -6,6 +6,27 @@ const PRODUCTION_BACKEND_URL = 'https://halo-backend-397980615504.us-central1.ru
 const STAGING_FRONTEND_HOST = 'halo-africa-site-staging-397980615504.us-central1.run.app'
 const STAGING_BACKEND_URL = 'https://halo-backend-staging-397980615504.us-central1.run.app'
 
+function sanitizeConfiguredBaseUrl(configured: string): string {
+  const normalized = configured.replace(/\/+$/, '')
+
+  // Handle malformed or shorthand Cloud Run hosts that omit project number.
+  const host = normalized.replace(/^https?:\/\//, '')
+  if (
+    host === 'halo-backend.us-central1.run.app' ||
+    host === 'halo-backend-.us-central1.run.app'
+  ) {
+    return PRODUCTION_BACKEND_URL
+  }
+  if (
+    host === 'halo-backend-staging.us-central1.run.app' ||
+    host === 'halo-backend-staging-.us-central1.run.app'
+  ) {
+    return STAGING_BACKEND_URL
+  }
+
+  return normalized
+}
+
 function resolveBaseUrl(): string {
   const hostname = typeof window !== 'undefined' ? window.location.hostname : ''
 
@@ -20,12 +41,7 @@ function resolveBaseUrl(): string {
   const configured = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim()
   if (!configured) return 'http://localhost:8000'
 
-  // Repair malformed Cloud Run hostnames like halo-backend-.us-central1.run.app.
-  if (configured.includes('halo-backend-.')) {
-    return PRODUCTION_BACKEND_URL
-  }
-
-  return configured.replace(/\/+$/, '')
+  return sanitizeConfiguredBaseUrl(configured)
 }
 
 const BASE_URL = resolveBaseUrl()
