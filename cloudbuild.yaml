@@ -59,16 +59,10 @@ steps:
           # Use provided backend URL
           echo "$$backend_url_override" > /workspace/VITE_API_BASE_URL
         else
-          app_env=$$(cat /workspace/APP_ENV)
-          
-          if [ "$$app_env" = "production" ]; then
-            # Production backend
-            backend_url="https://halo-backend-main-presence-500410-f8.us-central1.run.app"
-          else
-            # Staging backend
-            backend_url="https://halo-backend-main-presence-500410-f8.us-central1.run.app"
-          fi
-          
+          backend_svc=$$(cat /workspace/BACKEND_SERVICE_NAME | xargs)
+          project_number=$$(gcloud projects describe "${_PROJECT_ID}" --format='value(projectNumber)')
+          backend_url="https://$${backend_svc}-$${project_number}.${_REGION}.run.app"
+
           echo "✅ Using backend URL: $$backend_url"
           echo "$$backend_url" > /workspace/VITE_API_BASE_URL
         fi
@@ -153,6 +147,9 @@ steps:
       - -c
       - |
         svc=$$(cat /workspace/BACKEND_SERVICE_NAME | xargs)
+        frontend_svc=$$(cat /workspace/FRONTEND_SERVICE_NAME | xargs)
+        project_number=$$(gcloud projects describe "${_PROJECT_ID}" --format='value(projectNumber)')
+        frontend_url="https://$${frontend_svc}-$${project_number}.${_REGION}.run.app"
         env=$$(cat /workspace/APP_ENV | xargs)
         echo "📦 Deploying backend service: $$svc (env: $$env)"
         gcloud run deploy "$$svc" \
@@ -165,7 +162,7 @@ steps:
           --cpu=1 \
           --min-instances=0 \
           --max-instances=5 \
-          --set-env-vars="APP_ENV=$$env,FRONTEND_URL=https://$$(cat /workspace/VITE_API_BASE_URL)"
+          --set-env-vars="APP_ENV=$$env,FRONTEND_URL=$$frontend_url"
         
         echo ""
         echo "✅ Backend deployed!"

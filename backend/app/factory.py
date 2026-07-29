@@ -1,11 +1,8 @@
 from contextlib import asynccontextmanager
-from typing import AsyncIterator
+from collections.abc import AsyncIterator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
-
-from .config import Settings
 from .middleware import RequestLoggingMiddleware
 
 
