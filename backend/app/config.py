@@ -18,8 +18,9 @@ class BackendSettings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 10080
 
-    # CORS
+    # CORS - Support multiple origins separated by comma
     FRONTEND_URL: str = "http://localhost:5173"
+    ALLOWED_ORIGINS: str = "http://localhost:5173,http://localhost:3000"  # Comma-separated list
 
     # Google OAuth
     GOOGLE_CLIENT_ID: str = ""
@@ -29,3 +30,4 @@ class BackendSettings(BaseSettings):
 
 
 Settings = BackendSettings()
+

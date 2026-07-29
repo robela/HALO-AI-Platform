@@ -60,19 +60,11 @@ def create_app() -> FastAPI:
         openapi_tags=[AUTH_META, CONTACT_META, SPEECH_META, SIGN_META],
     )
 
-    # RequestLoggingMiddleware first (outermost wrapper)
-    app.add_middleware(RequestLoggingMiddleware)
-
-    app.include_router(auth_router)
-    app.include_router(contact_router)
-    app.include_router(speech_router)
-    app.include_router(sign_router)
-
-    # Add CORS middleware - MUST be added BEFORE the app defines endpoints
+    # Add CORS middleware FIRST (gets applied last, runs first)
     # This allows browsers to make cross-origin requests
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],  # Allow all origins in development
+        allow_origins=["*"],  # Allow all origins - critical for Cloud Run deployment
         allow_credentials=False,  # False when allow_origins=["*"]
         allow_methods=["*"],
         allow_headers=["*"],
@@ -80,8 +72,25 @@ def create_app() -> FastAPI:
         max_age=600,  # Cache preflight for 10 minutes
     )
 
+    # RequestLoggingMiddleware second (outermost wrapper after CORS)
+    app.add_middleware(RequestLoggingMiddleware)
+
+    app.include_router(auth_router)
+    app.include_router(contact_router)
+    app.include_router(speech_router)
+    app.include_router(sign_router)
+
     @app.get("/health", tags=["Health"])
     async def health():
         return {"status": "ok", "service": "HALO AI Platform API"}
+
+    # Add response headers to fix Cross-Origin-Opener-Policy and COOP issues
+    @app.middleware("http")
+    async def add_coop_headers(request, call_next):
+        response = await call_next(request)
+        # Allow cross-origin window access for Google Sign-In
+        response.headers["Cross-Origin-Opener-Policy"] = "same-origin-allow-popups"
+        response.headers["Cross-Origin-Embedder-Policy"] = "require-corp"
+        return response
 
     return app
