@@ -1,7 +1,21 @@
 import axios from 'axios'
 import type { AuthResponse, LoginRequest, RegisterRequest, GoogleAuthRequest, ContactSubmit } from '@/types/auth'
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8000'
+const FALLBACK_BACKEND_URL = 'https://halo-backend-397980615504.us-central1.run.app'
+
+function resolveBaseUrl(): string {
+  const configured = (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim()
+  if (!configured) return 'http://localhost:8000'
+
+  // Guard against malformed Cloud Run hostnames like halo-backend-.us-central1.run.app.
+  if (configured.includes('halo-backend-.us-central1.run.app')) {
+    return FALLBACK_BACKEND_URL
+  }
+
+  return configured.replace(/\/+$/, '')
+}
+
+const BASE_URL = resolveBaseUrl()
 
 export const authApiClient = axios.create({
   baseURL: BASE_URL,
