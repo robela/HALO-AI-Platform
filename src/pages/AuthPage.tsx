@@ -38,6 +38,8 @@ export function AuthPage() {
   const [mode, setMode] = useState<Mode>('login')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isGoogleScriptLoaded, setIsGoogleScriptLoaded] = useState(false)
+  const [isGoogleButtonRendered, setIsGoogleButtonRendered] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [form, setForm] = useState({ name: '', email: '', password: '' })
 
@@ -51,9 +53,11 @@ export function AuthPage() {
   // Load Google Identity Services script
   useEffect(() => {
     if (!GOOGLE_CLIENT_ID) return
+    setIsGoogleButtonRendered(false)
 
     const scriptId = 'google-gsi'
     if (document.getElementById(scriptId)) {
+      setIsGoogleScriptLoaded(Boolean(window.google))
       initGoogleButton()
       return
     }
@@ -63,12 +67,22 @@ export function AuthPage() {
     script.src = 'https://accounts.google.com/gsi/client'
     script.async = true
     script.defer = true
-    script.onload = initGoogleButton
+    script.onload = () => {
+      setIsGoogleScriptLoaded(true)
+      initGoogleButton()
+    }
+    script.onerror = () => {
+      setIsGoogleScriptLoaded(false)
+      setIsGoogleButtonRendered(false)
+    }
     document.head.appendChild(script)
   }, [mode]) // re-init when mode changes so button renders in new DOM position
 
   function initGoogleButton() {
-    if (!window.google || !googleBtnRef.current || !GOOGLE_CLIENT_ID) return
+    if (!window.google || !googleBtnRef.current || !GOOGLE_CLIENT_ID) {
+      setIsGoogleButtonRendered(false)
+      return
+    }
 
     window.google.accounts.id.initialize({
       client_id: GOOGLE_CLIENT_ID,
@@ -83,6 +97,21 @@ export function AuthPage() {
       text: mode === 'register' ? 'signup_with' : 'signin_with',
       shape: 'rectangular',
     })
+    setIsGoogleButtonRendered(true)
+  }
+
+  function handleGoogleFallbackClick() {
+    if (!GOOGLE_CLIENT_ID) {
+      setError('Google Sign-In is not configured.')
+      return
+    }
+
+    if (window.google?.accounts?.id) {
+      window.google.accounts.id.prompt()
+      return
+    }
+
+    setError('Google Sign-In is still loading. Please wait a moment and try again.')
   }
 
   function extractError(err: unknown): string {
@@ -288,7 +317,28 @@ export function AuthPage() {
               </div>
 
               {/* Google Button */}
-              <div ref={googleBtnRef} className="w-full flex justify-center" />
+              <div
+                ref={googleBtnRef}
+                className={cn('w-full flex justify-center', !isGoogleButtonRendered && 'hidden')}
+              />
+
+              {!isGoogleButtonRendered && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="lg"
+                  className="w-full"
+                  onClick={handleGoogleFallbackClick}
+                >
+                  Continue with Google
+                </Button>
+              )}
+
+              {!isGoogleScriptLoaded && (
+                <p className="mt-2 text-center text-xs text-muted-foreground">
+                  Loading Google Sign-In...
+                </p>
+              )}
             </>
           )}
 
