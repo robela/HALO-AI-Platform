@@ -5,12 +5,21 @@ const PRODUCTION_FRONTEND_HOST = 'halo-africa-site-397980615504.us-central1.run.
 const PRODUCTION_BACKEND_URL = 'https://halo-backend-397980615504.us-central1.run.app'
 const STAGING_FRONTEND_HOST = 'halo-africa-site-staging-397980615504.us-central1.run.app'
 const STAGING_BACKEND_URL = 'https://halo-backend-staging-397980615504.us-central1.run.app'
+const DEFAULT_CLOUD_RUN_PROJECT_NUMBER = '397980615504'
 
 function sanitizeConfiguredBaseUrl(configured: string): string {
   const normalized = configured.replace(/\/+$/, '')
 
   // Handle malformed or shorthand Cloud Run hosts that omit project number.
   const host = normalized.replace(/^https?:\/\//, '')
+
+  const cloudRunHost = host.match(/^(halo-backend(?:-staging)?)(?:-(\d+))?\.us-central1\.run\.app$/)
+  if (cloudRunHost) {
+    const servicePrefix = cloudRunHost[1]
+    const projectNumber = cloudRunHost[2] || DEFAULT_CLOUD_RUN_PROJECT_NUMBER
+    return `https://${servicePrefix}-${projectNumber}.us-central1.run.app`
+  }
+
   if (
     host === 'halo-backend.us-central1.run.app' ||
     host === 'halo-backend-.us-central1.run.app'
