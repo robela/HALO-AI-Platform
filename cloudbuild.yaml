@@ -31,6 +31,7 @@ steps:
         frontend_override="${_SERVICE_NAME_FRONTEND}"
         backend_override="${_SERVICE_NAME_BACKEND}"
         backend_url_override="${_BACKEND_API_BASE_URL}"
+        project_number=$(gcloud projects describe "${_PROJECT_ID}" --format='value(projectNumber)' 2>/dev/null || true)
 
         if [ -n "$$frontend_override" ]; then
           echo "$$frontend_override" > /workspace/FRONTEND_SERVICE_NAME
@@ -56,8 +57,7 @@ steps:
 
         # Set backend API URL
         if [ -n "$$backend_url_override" ]; then
-          # Use provided backend URL
-          echo "$$backend_url_override" > /workspace/VITE_API_BASE_URL
+          backend_url="$$backend_url_override"
         else
           backend_svc=$$(cat /workspace/BACKEND_SERVICE_NAME | xargs)
           # Prefer the actual deployed Cloud Run service URL.
@@ -68,20 +68,34 @@ steps:
 
           # Fallback to deterministic Cloud Run hostname only if project number resolves.
           if [ -z "$$backend_url" ]; then
-            project_number=$$(gcloud projects describe "${_PROJECT_ID}" --format='value(projectNumber)' 2>/dev/null || true)
             if [ -n "$$project_number" ]; then
               backend_url="https://$${backend_svc}-$${project_number}.${_REGION}.run.app"
             fi
           fi
-
-          if [ -z "$$backend_url" ]; then
-            echo "❌ Unable to resolve backend API URL. Provide _BACKEND_API_BASE_URL explicitly."
-            exit 1
-          fi
-
-          echo "✅ Using backend URL: $$backend_url"
-          echo "$$backend_url" > /workspace/VITE_API_BASE_URL
         fi
+
+        backend_url=$${backend_url%/}
+
+        # Normalize common malformed Cloud Run backend hosts that miss project number.
+        if [ "$$backend_url" = "https://halo-backend.${_REGION}.run.app" ] || [ "$$backend_url" = "https://halo-backend-.${_REGION}.run.app" ]; then
+          [ -n "$$project_number" ] || { echo "❌ project_number unavailable for backend URL normalization"; exit 1; }
+          backend_url="https://halo-backend-$${project_number}.${_REGION}.run.app"
+        fi
+        if [ "$$backend_url" = "https://halo-backend-staging.${_REGION}.run.app" ] || [ "$$backend_url" = "https://halo-backend-staging-.${_REGION}.run.app" ]; then
+          [ -n "$$project_number" ] || { echo "❌ project_number unavailable for backend URL normalization"; exit 1; }
+          backend_url="https://halo-backend-staging-$${project_number}.${_REGION}.run.app"
+        fi
+
+        if [ -z "$$backend_url" ]; then
+          echo "❌ Unable to resolve backend API URL. Provide _BACKEND_API_BASE_URL explicitly."
+          exit 1
+        fi
+
+        # Fail fast if a malformed host still slipped through.
+        echo "$$backend_url" | grep -Eq 'https://[^/]+-\.[^.]+\.run\.app' && { echo "❌ Malformed backend URL: $$backend_url"; exit 1; }
+
+        echo "✅ Using backend URL: $$backend_url"
+        echo "$$backend_url" > /workspace/VITE_API_BASE_URL
 
         echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
         echo "📋 Deployment Configuration:"
