@@ -8,7 +8,6 @@ import {
   Phone,
   Settings,
   ExternalLink,
-  Zap,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -28,8 +27,12 @@ export function Sidebar() {
     <aside className="hidden md:flex w-60 flex-col border-r border-border bg-card/50 backdrop-blur-xl">
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
-        <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-halo-500 to-violet-600 shadow-glow-sm">
-          <Zap className="size-5 text-white" />
+        <div className="flex size-10 items-center justify-center overflow-hidden rounded-xl bg-transparent">
+          <img
+            src="/halo-logo-symbol-transparent.png"
+            alt="HALO Africa logo"
+            className="size-9 object-contain"
+          />
         </div>
         <div>
           <p className="text-sm font-bold tracking-tight text-foreground">HALO AI</p>

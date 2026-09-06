@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Eye, EyeOff, Mail, Lock, User, Zap, ArrowLeft, AlertCircle } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuthStore } from '@/stores/authStore'
@@ -198,9 +198,13 @@ export function AuthPage() {
 
         <div className="rounded-2xl border border-border bg-card/80 backdrop-blur-xl p-8 shadow-2xl">
           {/* Logo */}
-          <div className="flex items-center gap-3 mb-8">
-            <div className="flex size-10 items-center justify-center rounded-xl bg-gradient-to-br from-halo-500 to-violet-600 shadow-glow-sm">
-              <Zap className="size-5 text-white" />
+          <div className="mb-8 flex flex-col items-center justify-center gap-3 text-center">
+            <div className="flex size-20 items-center justify-center overflow-hidden rounded-2xl bg-transparent">
+              <img
+                src="/halo-logo-symbol-transparent.png"
+                alt="HALO Africa logo"
+                className="size-[4.5rem] object-contain"
+              />
             </div>
             <div>
               <p className="text-base font-bold">HALO AI</p>

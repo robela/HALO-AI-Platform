@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { Bell, Search, Menu, X, Zap, LayoutDashboard, MessageSquare, Mic, BookOpen, Phone, Settings, LogOut, ChevronDown } from 'lucide-react'
+import { Bell, Search, Menu, X, LayoutDashboard, MessageSquare, Mic, BookOpen, Phone, Settings, LogOut, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
@@ -70,6 +70,11 @@ export function TopBar() {
             {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </Button>
 
+          <img
+            src="/halo-logo-symbol-transparent.png"
+            alt="HALO Africa logo"
+            className="size-7 object-contain"
+          />
           <h1 className="text-base font-semibold text-foreground">{currentTitle}</h1>
         </div>
 
@@ -148,8 +153,12 @@ export function TopBar() {
               className="fixed inset-y-0 left-0 z-50 w-64 bg-card border-r border-border md:hidden"
             >
               <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
-                <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-br from-halo-500 to-violet-600">
-                  <Zap className="size-5 text-white" />
+                <div className="flex size-9 items-center justify-center overflow-hidden rounded-xl bg-transparent">
+                  <img
+                    src="/halo-logo-symbol-transparent.png"
+                    alt="HALO Africa logo"
+                    className="size-9 object-contain"
+                  />
                 </div>
                 <div>
                   <p className="text-sm font-bold">HALO AI</p>
