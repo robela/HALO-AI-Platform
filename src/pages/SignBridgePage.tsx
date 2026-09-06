@@ -9,7 +9,6 @@ import {
   Smartphone,
   Globe,
   Accessibility,
-  Zap,
   HeartHandshake,
   GraduationCap,
   Building2,
@@ -59,8 +58,12 @@ export function SignBridgePage() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="flex size-8 items-center justify-center rounded-lg bg-gradient-to-br from-halo-500 to-violet-600 shadow-glow-sm">
-              <Zap className="size-4 text-white" />
+            <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg bg-transparent">
+              <img
+                src="/halo-logo-symbol-transparent.png"
+                alt="HALO Africa logo"
+                className="size-7 object-contain"
+              />
             </div>
             <span className="text-base font-bold tracking-tight">HALO AI</span>
           </Link>
@@ -363,7 +366,11 @@ export function SignBridgePage() {
       <footer className="border-t border-border py-8 px-6">
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Zap className="size-4 text-halo-400" />
+            <img
+              src="/halo-logo-symbol-transparent.png"
+              alt="HALO Africa logo"
+              className="size-4 object-contain"
+            />
             <span>© 2026 HALO AI Technologies PLC · SignBridge AI</span>
           </div>
           <Link to="/" className="hover:text-foreground transition-colors flex items-center gap-1">
