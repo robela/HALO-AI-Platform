@@ -1,0 +1,1 @@
+Temporary frontend restart helper; safe to remove after the local server is restarted.

@@ -111,13 +111,13 @@ Production:
 ```bash
 gcloud run domain-mappings create \
   --service=halo-africa-site \
-  --domain=haloafrica.ai \
+  --domain=haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 
 gcloud run domain-mappings create \
   --service=halo-africa-site \
-  --domain=www.haloafrica.ai \
+  --domain=www.haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 ```
@@ -127,7 +127,7 @@ Staging:
 ```bash
 gcloud run domain-mappings create \
   --service=halo-africa-site-staging \
-  --domain=staging.haloafrica.ai \
+  --domain=staging.haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 ```
@@ -137,13 +137,13 @@ EAIOS app and API mappings:
 ```bash
 gcloud run domain-mappings create \
   --service=enterprise-ai-frontend \
-  --domain=app.haloafrica.ai \
+  --domain=app.haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 
 gcloud run domain-mappings create \
   --service=enterprise-ai-backend \
-  --domain=api.haloafrica.ai \
+  --domain=api.haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 ```

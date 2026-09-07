@@ -45,10 +45,10 @@ export function SettingsPage() {
               </CardHeader>
               <CardContent className="space-y-5">
                 {([
-                  { key: 'chatApi',      label: 'Chat API',       placeholder: 'https://api.haloafrica.ai/v1' },
-                  { key: 'voiceApi',     label: 'Voice API',      placeholder: 'https://voice.haloafrica.ai/v1' },
-                  { key: 'knowledgeApi', label: 'Knowledge API',  placeholder: 'https://knowledge.haloafrica.ai/v1' },
-                  { key: 'ivrApi',       label: 'IVR API',        placeholder: 'https://ivr.haloafrica.ai/v1' },
+                  { key: 'chatApi',      label: 'Chat API',       placeholder: 'https://api.haloafrica.org/v1' },
+                  { key: 'voiceApi',     label: 'Voice API',      placeholder: 'https://voice.haloafrica.org/v1' },
+                  { key: 'knowledgeApi', label: 'Knowledge API',  placeholder: 'https://knowledge.haloafrica.org/v1' },
+                  { key: 'ivrApi',       label: 'IVR API',        placeholder: 'https://ivr.haloafrica.org/v1' },
                 ] as const).map(({ key, label, placeholder }) => (
                   <div key={key} className="space-y-1.5">
                     <SectionLabel>{label}</SectionLabel>
@@ -130,8 +130,8 @@ export function SettingsPage() {
               <CardContent className="space-y-5">
                 {([
                   { key: 'name',         label: 'Organization Name', placeholder: 'HALO AI Technologies PLC' },
-                  { key: 'website',      label: 'Website',           placeholder: 'https://haloafrica.ai' },
-                  { key: 'contactEmail', label: 'Contact Email',     placeholder: 'contact@haloafrica.ai' },
+                  { key: 'website',      label: 'Website',           placeholder: 'https://haloafrica.org' },
+                  { key: 'contactEmail', label: 'Contact Email',     placeholder: 'contact@haloafrica.org' },
                   { key: 'industry',     label: 'Industry',          placeholder: 'Technology' },
                   { key: 'country',      label: 'Country',           placeholder: 'Ethiopia' },
                 ] as const).map(({ key, label, placeholder }) => (

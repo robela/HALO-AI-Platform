@@ -37,7 +37,7 @@ The backend (`backend/app/factory.py`) has been updated with:
    ALLOWED_ORIGINS=*
    
    # For production (specific domains):
-   ALLOWED_ORIGINS=https://halo-africa-site-397980615504.us-central1.run.app,https://api.haloafrica.ai
+   ALLOWED_ORIGINS=https://halo-africa-site-397980615504.us-central1.run.app,https://api.haloafrica.org
    ```
 
 ### Verification
@@ -96,7 +96,7 @@ Cross-Origin-Embedder-Policy: require-corp
 2. **Backend Service** (.env or Cloud Run secret):
    ```bash
    GOOGLE_CLIENT_ID=397980615504-bk84p5ecc8ml3k5c6raccduk1okqvcdq.apps.googleusercontent.com
-   ALLOWED_ORIGINS=https://halo-africa-site-397980615504.us-central1.run.app,https://haloafrica.ai
+   ALLOWED_ORIGINS=https://halo-africa-site-397980615504.us-central1.run.app,https://haloafrica.org
    ```
 
 3. **Google OAuth Console**:

@@ -4,10 +4,10 @@ import type { AppSettings } from '@/types'
 
 const DEFAULT_SETTINGS: AppSettings = {
   apiEndpoints: {
-    chatApi: 'https://api.haloafrica.ai/v1',
-    voiceApi: 'https://voice.haloafrica.ai/v1',
-    knowledgeApi: 'https://knowledge.haloafrica.ai/v1',
-    ivrApi: 'https://ivr.haloafrica.ai/v1',
+    chatApi: 'https://api.haloafrica.org/v1',
+    voiceApi: 'https://voice.haloafrica.org/v1',
+    knowledgeApi: 'https://knowledge.haloafrica.org/v1',
+    ivrApi: 'https://ivr.haloafrica.org/v1',
   },
   preferences: {
     theme: 'dark',
@@ -19,10 +19,10 @@ const DEFAULT_SETTINGS: AppSettings = {
   },
   organization: {
     name: 'HALO AI Technologies PLC',
-    website: 'https://haloafrica.ai',
+    website: 'https://haloafrica.org',
     industry: 'Technology',
     country: 'Ethiopia',
-    contactEmail: 'contact@haloafrica.ai',
+    contactEmail: 'contact@haloafrica.org',
     planType: 'enterprise',
   },
 }

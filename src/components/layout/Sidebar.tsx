@@ -29,9 +29,9 @@ export function Sidebar() {
       <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
         <div className="flex size-10 items-center justify-center overflow-hidden rounded-xl bg-transparent">
           <img
-            src="/halo-logo-symbol-transparent.png"
+            src="/halo-logo-symbol-transparent.png?v=20260908"
             alt="HALO Africa logo"
-            className="size-9 object-contain"
+            className="brand-logo size-9 object-contain"
           />
         </div>
         <div>
@@ -73,13 +73,13 @@ export function Sidebar() {
       {/* Footer */}
       <div className="border-t border-border p-4">
         <a
-          href="https://haloafrica.ai"
+          href="https://haloafrica.org"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-2 rounded-lg px-3 py-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
         >
           <ExternalLink className="size-3" />
-          haloafrica.ai
+          haloafrica.org
         </a>
         <p className="mt-1 px-3 text-[10px] text-muted-foreground/60">v1.0.0 · Enterprise</p>
       </div>

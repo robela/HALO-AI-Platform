@@ -229,6 +229,6 @@ Environment variables:
 4. 📋 Deploy staging and test
 5. 📋 Set up CI/CD triggers
 6. 📋 Deploy production
-7. 📋 Configure custom domain (optional): `api.haloafrica.ai`
+7. 📋 Configure custom domain (optional): `api.haloafrica.org`
 
 **Ready to deploy!**

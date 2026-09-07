@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Mic, Brain, Database, Phone, Zap, Globe } from 'lucide-react'
+import { Mic, Brain, Database, Phone, Wifi, Globe } from 'lucide-react'
 
 const technologies = [
   {
@@ -43,7 +43,7 @@ const technologies = [
     bg: 'bg-orange-500/10 border-orange-500/20',
   },
   {
-    icon: Zap,
+    icon: Wifi,
     title: 'Real-time APIs',
     description: 'Enterprise-grade REST and WebSocket APIs with streaming, webhooks, and 99.9% SLA uptime guarantee.',
     specs: ['REST + WebSocket', '<50ms p99', 'Auto-scaling'],

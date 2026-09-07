@@ -56,15 +56,13 @@ export function SignBridgePage() {
     <div className="min-h-screen bg-background animated-bg text-foreground">
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg bg-transparent">
-              <img
-                src="/halo-logo-symbol-transparent.png"
-                alt="HALO Africa logo"
-                className="size-7 object-contain"
-              />
-            </div>
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+          <Link to="/" className="flex items-center gap-3">
+            <img
+              src="/halo-logo-symbol-transparent.png?v=20260908"
+              alt="HALO Africa logo"
+              className="brand-logo size-11 scale-125 object-contain"
+            />
             <span className="text-base font-bold tracking-tight">HALO AI</span>
           </Link>
           <Button variant="ghost" size="sm" asChild>
@@ -367,9 +365,9 @@ export function SignBridgePage() {
         <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <img
-              src="/halo-logo-symbol-transparent.png"
+              src="/halo-logo-symbol-transparent.png?v=20260908"
               alt="HALO Africa logo"
-              className="size-4 object-contain"
+              className="brand-logo size-5 object-contain"
             />
             <span>© 2026 HALO AI Technologies PLC · SignBridge AI</span>
           </div>

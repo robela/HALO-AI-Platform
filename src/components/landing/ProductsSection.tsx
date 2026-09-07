@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, HandMetal, Mic, Captions, Smartphone, Globe, Accessibility, Building2, Bot, ShieldCheck, Workflow } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
-const EAIOS_APP_URL = 'https://app.haloafrica.ai'
+const EAIOS_APP_URL = 'https://app.haloafrica.org'
 
 const features = [
   {
@@ -205,7 +205,7 @@ export function ProductsSection() {
                   </a>
                 </Button>
                 <Button variant="outline" size="lg" asChild>
-                  <a href="#impact">View Use Cases</a>
+                  <a href="#contact">View Use Cases</a>
                 </Button>
               </div>
             </div>

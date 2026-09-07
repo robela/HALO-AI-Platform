@@ -199,16 +199,21 @@ export function AuthPage() {
         <div className="rounded-2xl border border-border bg-card/80 backdrop-blur-xl p-8 shadow-2xl">
           {/* Logo */}
           <div className="mb-8 flex flex-col items-center justify-center gap-3 text-center">
-            <div className="flex size-20 items-center justify-center overflow-hidden rounded-2xl bg-transparent">
+            <div className="flex size-28 items-center justify-center overflow-hidden rounded-2xl bg-transparent">
               <img
-                src="/halo-logo-symbol-transparent.png"
+                src="/halo-logo-symbol-transparent.png?v=20260908"
                 alt="HALO Africa logo"
-                className="size-[4.5rem] object-contain"
+                className="brand-logo h-[6.5rem] w-auto scale-[1.35] object-contain"
               />
             </div>
             <div>
-              <p className="text-base font-bold">HALO AI</p>
-              <p className="text-[10px] text-muted-foreground">Light · Guidance · Trust · Intelligence</p>
+              <p className="text-base font-extrabold tracking-[0.08em]">
+                <span className="text-foreground">HaloAfrica </span>
+                <span className="text-[#F5A623]">
+                  AI
+                </span>
+              </p>
+              <p className="text-[10px] tracking-[0.14em] text-[#F5A623]/90">Light · Guidance · Trust · Intelligence</p>
             </div>
           </div>
 

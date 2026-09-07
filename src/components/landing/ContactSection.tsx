@@ -63,7 +63,7 @@ export function ContactSection() {
             <div className="space-y-4">
               {[
                 { icon: MapPin, label: 'Addis Ababa, Ethiopia', sub: 'Africa HQ' },
-                { icon: Mail, label: 'contact@haloafrica.ai', sub: 'General Inquiries' },
+                { icon: Mail, label: 'contact@haloafrica.org', sub: 'General Inquiries' },
                 { icon: Phone, label: '+251 911 000 000', sub: 'Enterprise Sales' },
               ].map(({ icon: Icon, label, sub }) => (
                 <div key={label} className="flex items-center gap-4">

@@ -134,12 +134,12 @@ Map the public domains after production is verified.
 ```bash
 gcloud run domain-mappings create \
   --service=halo-africa-site \
-  --domain=haloafrica.ai \
+  --domain=haloafrica.org \
   --region=us-central1
 
 gcloud run domain-mappings create \
   --service=halo-africa-site \
-  --domain=www.haloafrica.ai \
+  --domain=www.haloafrica.org \
   --region=us-central1
 ```
 
@@ -148,7 +148,7 @@ For staging:
 ```bash
 gcloud run domain-mappings create \
   --service=halo-africa-site-staging \
-  --domain=staging.haloafrica.ai \
+  --domain=staging.haloafrica.org \
   --region=us-central1
 ```
 
@@ -159,12 +159,12 @@ Production:
 ```bash
 gcloud run domain-mappings create \
   --service=enterprise-ai-frontend \
-  --domain=app.haloafrica.ai \
+  --domain=app.haloafrica.org \
   --region=us-central1
 
 gcloud run domain-mappings create \
   --service=enterprise-ai-backend \
-  --domain=api.haloafrica.ai \
+  --domain=api.haloafrica.org \
   --region=us-central1
 ```
 
@@ -173,12 +173,12 @@ Staging:
 ```bash
 gcloud run domain-mappings create \
   --service=enterprise-ai-frontend-staging \
-  --domain=staging-app.haloafrica.ai \
+  --domain=staging-app.haloafrica.org \
   --region=us-central1
 
 gcloud run domain-mappings create \
   --service=enterprise-ai-backend-staging \
-  --domain=staging-api.haloafrica.ai \
+  --domain=staging-api.haloafrica.org \
   --region=us-central1
 ```
 

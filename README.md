@@ -65,10 +65,10 @@ Configure your backend endpoints in **Settings → API Endpoints** or directly i
 
 ```ts
 apiEndpoints: {
-  chatApi:      'https://api.haloafrica.ai/v1',
-  voiceApi:     'https://voice.haloafrica.ai/v1',
-  knowledgeApi: 'https://knowledge.haloafrica.ai/v1',
-  ivrApi:       'https://ivr.haloafrica.ai/v1',
+  chatApi:      'https://api.haloafrica.org/v1',
+  voiceApi:     'https://voice.haloafrica.org/v1',
+  knowledgeApi: 'https://knowledge.haloafrica.org/v1',
+  ivrApi:       'https://ivr.haloafrica.org/v1',
 }
 ```
 
@@ -88,4 +88,4 @@ All API keys are sent via `Authorization: Bearer <token>` from `localStorage.get
 
 ---
 
-© 2024 HALO AI Technologies PLC · [haloafrica.ai](https://haloafrica.ai)
+© 2024 HALO AI Technologies PLC · [haloafrica.org](https://haloafrica.org)

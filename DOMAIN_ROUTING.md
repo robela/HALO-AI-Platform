@@ -6,16 +6,16 @@ Deploy the HALO Africa public website and EAIOS as separate Cloud Run services.
 
 | Surface | Purpose | Recommended service | Recommended hostname |
 |---|---|---|---|
-| HALO public website | Landing page, products, company info, contact/demo | `halo-africa-site` | `haloafrica.ai` or `www.haloafrica.ai` |
-| HALO website staging | Preview the public site before release | `halo-africa-site-staging` | `staging.haloafrica.ai` |
-| EAIOS app | Login, dashboard, admin, documents, workflows | `enterprise-ai-frontend` or `enterprise-ai-frontend-staging` | `app.haloafrica.ai` |
-| EAIOS backend | API for the EAIOS app | `enterprise-ai-backend` or `enterprise-ai-backend-staging` | `api.haloafrica.ai` |
+| HALO public website | Landing page, products, company info, contact/demo | `halo-africa-site` | `haloafrica.org` or `www.haloafrica.org` |
+| HALO website staging | Preview the public site before release | `halo-africa-site-staging` | `staging.haloafrica.org` |
+| EAIOS app | Login, dashboard, admin, documents, workflows | `enterprise-ai-frontend` or `enterprise-ai-frontend-staging` | `app.haloafrica.org` |
+| EAIOS backend | API for the EAIOS app | `enterprise-ai-backend` or `enterprise-ai-backend-staging` | `api.haloafrica.org` |
 
 ## User flow
 
-1. Visitors land on `haloafrica.ai`.
+1. Visitors land on `haloafrica.org`.
 2. They browse products on the HALO website.
-3. The EAIOS product card links to `https://app.haloafrica.ai`.
+3. The EAIOS product card links to `https://app.haloafrica.org`.
 4. The EAIOS frontend talks to the EAIOS backend API.
 
 ## Why not combine them in one container
@@ -29,16 +29,16 @@ Deploy the HALO Africa public website and EAIOS as separate Cloud Run services.
 
 Recommended production mappings:
 
-- `haloafrica.ai` -> `halo-africa-site`
-- `www.haloafrica.ai` -> `halo-africa-site`
-- `app.haloafrica.ai` -> `enterprise-ai-frontend`
-- `api.haloafrica.ai` -> `enterprise-ai-backend`
+- `haloafrica.org` -> `halo-africa-site`
+- `www.haloafrica.org` -> `halo-africa-site`
+- `app.haloafrica.org` -> `enterprise-ai-frontend`
+- `api.haloafrica.org` -> `enterprise-ai-backend`
 
 Recommended staging mappings:
 
-- `staging.haloafrica.ai` -> `halo-africa-site-staging`
-- `staging-app.haloafrica.ai` -> `enterprise-ai-frontend-staging`
-- `staging-api.haloafrica.ai` -> `enterprise-ai-backend-staging`
+- `staging.haloafrica.org` -> `halo-africa-site-staging`
+- `staging-app.haloafrica.org` -> `enterprise-ai-frontend-staging`
+- `staging-api.haloafrica.org` -> `enterprise-ai-backend-staging`
 
 ## Suggested Cloud Run commands
 
@@ -47,19 +47,19 @@ After the HALO site is first deployed, map the custom domains:
 ```bash
 gcloud run domain-mappings create \
   --service=halo-africa-site \
-  --domain=haloafrica.ai \
+  --domain=haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 
 gcloud run domain-mappings create \
   --service=halo-africa-site \
-  --domain=www.haloafrica.ai \
+  --domain=www.haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 
 gcloud run domain-mappings create \
   --service=enterprise-ai-frontend \
-  --domain=app.haloafrica.ai \
+  --domain=app.haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 ```
@@ -69,7 +69,7 @@ If you later want a dedicated API domain:
 ```bash
 gcloud run domain-mappings create \
   --service=enterprise-ai-backend \
-  --domain=api.haloafrica.ai \
+  --domain=api.haloafrica.org \
   --region=us-central1 \
   --project=main-presence-500410-f8
 ```

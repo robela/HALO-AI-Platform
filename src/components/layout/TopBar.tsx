@@ -71,9 +71,9 @@ export function TopBar() {
           </Button>
 
           <img
-            src="/halo-logo-symbol-transparent.png"
+            src="/halo-logo-symbol-transparent.png?v=20260908"
             alt="HALO Africa logo"
-            className="size-7 object-contain"
+            className="brand-logo size-7 object-contain"
           />
           <h1 className="text-base font-semibold text-foreground">{currentTitle}</h1>
         </div>
@@ -155,9 +155,9 @@ export function TopBar() {
               <div className="flex items-center gap-3 px-5 py-5 border-b border-border">
                 <div className="flex size-9 items-center justify-center overflow-hidden rounded-xl bg-transparent">
                   <img
-                    src="/halo-logo-symbol-transparent.png"
+                    src="/halo-logo-symbol-transparent.png?v=20260908"
                     alt="HALO Africa logo"
-                    className="size-9 object-contain"
+                    className="brand-logo size-9 object-contain"
                   />
                 </div>
                 <div>
